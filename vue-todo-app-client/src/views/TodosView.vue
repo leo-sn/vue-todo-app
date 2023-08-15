@@ -97,4 +97,13 @@
     align-items: center;
   }
 
+  .todo-list {
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+  }
+
 </style>

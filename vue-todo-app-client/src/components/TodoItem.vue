@@ -17,59 +17,112 @@ defineEmits(['toggle-complete', 'edit-todo', 'updated-todo', 'delete-todo'])
 </script>
 
 <template>
-    <li>
-        <input 
-            type="checkbox" 
-            :checked="todo.isCompleted"
-            @input="$emit('toggle-complete', index)" 
-        />
-        <div class="todo">
-            <input v-if="todo.isEditing" type="text" :value="todo.todo" @input="$emit('updated-todo', index, $event.target.value)"> 
-            <span v-else :class="{ 'todo-completed': todo.isCompleted }">
-                {{ todo.todo }}
-            </span>
+    <div class="todo-wrap">
+        <li>
+            <input 
+                type="checkbox" 
+                :checked="todo.isCompleted"
+                @input="$emit('toggle-complete', index)" 
+            />
+            <div class="todo">
+                <input v-if="todo.isEditing" 
+                    type="text" 
+                    :value="todo.todo" 
+                    @input="$emit('updated-todo', index, $event.target.value)"
+                    class="todo-enabled"
+                > 
+                <span v-else :class="{ 'todo-completed': todo.isCompleted }">
+                    {{ todo.todo }}
+                </span>
+            </div>
+        </li>
+        <div class="todo-actions">
+            <Icon 
+                v-if="todo.isEditing" 
+                class="icon" 
+                icon="ph:check-circle" 
+                color="#41b080" 
+                width="22" 
+                height="22" 
+                @click="$emit('edit-todo', index)"
+            />
+            <Icon 
+                v-else 
+                class="icon" 
+                icon="ph:pencil-fill" 
+                color="#41b080" 
+                width="22" 
+                height="22" 
+                @click="$emit('edit-todo', index)"
+            />
+            <Icon 
+                class="icon" 
+                icon="ph:trash" 
+                color="#f95e5e" 
+                width="22" 
+                height="22" 
+                @click="$emit('delete-todo', todo.id)"
+            />
         </div>
-    </li>
-    <div class="todo-actions">
-        <Icon 
-            v-if="todo.isEditing" 
-            class="icon" 
-            icon="ph:check-circle" 
-            color="#41b080" 
-            width="22" 
-            height="22" 
-            @click="$emit('edit-todo', index)"
-        />
-        <Icon 
-            v-else 
-            class="icon" 
-            icon="ph:pencil-fill" 
-            color="#41b080" 
-            width="22" 
-            height="22" 
-            @click="$emit('edit-todo', index)"
-        />
-        <Icon 
-            class="icon" 
-            icon="ph:trash" 
-            color="#f95e5e" 
-            width="22" 
-            height="22" 
-            @click="$emit('delete-todo', todo.id)"
-        />
     </div>
 </template>
 
 
 <style lang="scss" scoped>
 
+    .todo-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        padding: 0 20px;
+        max-height: 50px;
+        width: 100%;
+        .todo-actions {
+            display: none;
+        }
+
+        &:hover {
+                    background-color: rgb(204, 204, 204);
+                }
+
+        &:hover {
+            .todo-actions {
+                display: flex;
+                height: 100%;
+                align-items: center;
+            }      
+        }
+
+        input[type=checkbox] {
+            width: 22px;
+            height: 22px;
+            border-radius: 100%;
+        }
+    }
+
     li {
         display: flex;
         position: relative;
+        align-items: center;
+        gap: 10px;
+        
 
         .todo {
             color: blue;
+            display: flex;
+            width: 300px;
 
+            input {
+                width: 100%;
+            }
+
+            span {
+                max-width: 100%;
+            }
+
+            &-enabled {
+            }
 
             &-completed {
                 text-decoration: line-through;
