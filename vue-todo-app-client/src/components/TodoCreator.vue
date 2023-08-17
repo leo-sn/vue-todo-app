@@ -77,7 +77,8 @@
     .error-message {
         color: rgb(255, 43, 43);
         font-size: 12px;
-        position: relative;
+        position: absolute;
+        top: 160px;
     }
 
 </style>

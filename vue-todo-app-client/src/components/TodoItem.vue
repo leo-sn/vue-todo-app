@@ -22,15 +22,16 @@ defineEmits(['toggle-complete', 'edit-todo', 'updated-todo', 'delete-todo'])
             <input 
                 type="checkbox" 
                 :checked="todo.isCompleted"
-                @input="$emit('toggle-complete', index)" 
+                @input="$emit('toggle-complete', index)"
             />
             <div class="todo">
-                <input v-if="todo.isEditing" 
+                <input 
+                    v-if="todo.isEditing"
+                    class="todo-enabled"
                     type="text" 
                     :value="todo.todo" 
                     @input="$emit('updated-todo', index, $event.target.value)"
-                    class="todo-enabled"
-                > 
+                /> 
                 <span v-else :class="{ 'todo-completed': todo.isCompleted }">
                     {{ todo.todo }}
                 </span>
@@ -72,21 +73,22 @@ defineEmits(['toggle-complete', 'edit-todo', 'updated-todo', 'delete-todo'])
 
     .todo-wrap {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        height: 50px;
-        padding: 0 20px;
-        max-height: 50px;
+        height: fit-content;
+        padding: 5px 10px;
         width: 100%;
+
+        gap: 5px;
+
         .todo-actions {
             display: none;
         }
 
-        &:hover {
-                    background-color: rgb(204, 204, 204);
-                }
 
         &:hover {
+            border-radius: 7px;
+            background-color: rgb(204, 204, 204, 0.25);
             .todo-actions {
                 display: flex;
                 height: 100%;
@@ -98,36 +100,70 @@ defineEmits(['toggle-complete', 'edit-todo', 'updated-todo', 'delete-todo'])
             width: 22px;
             height: 22px;
             border-radius: 100%;
+            border: 1px solid rgb(196, 196, 196);
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+            cursor: pointer;
+
+            &:checked {
+                background-color: rgb(112, 187, 112);
+                border: 1px solid rgb(112, 187, 112);
+            }
+
         }
     }
 
     li {
+        height: fit-content;
         display: flex;
-        position: relative;
-        align-items: center;
         gap: 10px;
-        
+        width: 85%;
+
+
+        input {
+                min-width: 22px;
+            }
+
 
         .todo {
-            color: blue;
-            display: flex;
-            width: 300px;
+            // width: 100%;
+            align-items: center;
+            width: 100%;
 
             input {
                 width: 100%;
             }
 
+            textarea {
+                width: 100%;
+                height: fit-content;
+                resize: none;
+                border: 1px solid rgb(196, 196, 196);
+                border-radius: 5px;
+                padding: 0 10px;
+                outline: none;
+            }
+
+
             span {
-                max-width: 100%;
+                max-width: 50%;
+                font-size: 12px;
+                color: rgb(36, 36, 36)
             }
 
             &-enabled {
+                // min-width: 100%;
             }
 
             &-completed {
                 text-decoration: line-through;
             }
         }
+    }
+
+    .todo-actions {
+        display: flex;
     }
 
 </style>

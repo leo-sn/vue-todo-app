@@ -98,11 +98,14 @@
   }
 
   .todo-list {
-    width: 100%;
+    width: 90%;
     
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
+
+    margin-top: 30px;
 
   }
 
